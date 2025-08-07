@@ -5,6 +5,7 @@ import { islandMoments, ebGaramond } from "@/lib/fonts/fonts";
 import { Toaster } from "sonner";
 import UserSessionLoader from "@/components/providers/UserSessionLoader";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Tio pelotte",
@@ -23,7 +24,8 @@ export default function RootLayout({
         <Navbar />
         {children}
         <ClientLayoutWrapper />
-             <Toaster
+
+        <Toaster
           position="bottom-center"
           toastOptions={{
             style: {
@@ -33,6 +35,8 @@ export default function RootLayout({
             },
           }}
         />
+
+        {process.env.NODE_ENV === "production" && <SpeedInsights />}
       </body>
     </html>
   );
