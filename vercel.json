@@ -4,4 +4,3 @@
   "buildCommand": "npm run build",
   "ignoreCommand": "false"
 }
-git rm --cached -r tiopelotte-next-frontend-main
