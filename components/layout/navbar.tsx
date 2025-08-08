@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Menu, X, ShoppingCart, UserRound } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useToggleMenu } from "../hooks/useMenuToggle";
 import MenuList from "./menuList";
 import { useUserStore } from "@/store/user-store";
@@ -14,9 +15,29 @@ export default function Navbar() {
 
   const user = useUserStore((state) => state.user);
   const cart = useCartStore((state) => state.cart);
-  const itemCount = cart.length; 
+  const itemCount = cart.length;
+  const [speedHeader, setSpeedHeader] = useState(false);
+
+  useEffect(() => {
+    const fetchFlag = async () => {
+      try {
+        const res = await fetch("/api/flags", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ keys: ["speed_header"] }),
+        });
+        const data = await res.json();
+        setSpeedHeader(Boolean(data.speed_header));
+      } catch (e) {
+        console.error("Error fetching flag speed_header", e);
+      }
+    };
+    fetchFlag();
+  }, []);
   return (
-    <header className="sticky top-0 left-0 w-full flex items-center justify-between py-3 md:py-0 md:px-5 shadow-md z-50 navbar-secondary bg-white/90 backdrop-blur-sm">
+    <header
+      className={`sticky top-0 left-0 w-full flex items-center justify-between ${speedHeader ? "py-1" : "py-3"} md:py-0 md:px-5 shadow-md z-50 navbar-secondary bg-white/90 backdrop-blur-sm`}
+    >
       <div className="hidden md:flex size-[6vw] relative">
         <Image src="/favicon.ico" alt="Tio Pelotte Icon" fill className="object-contain" />
       </div>
