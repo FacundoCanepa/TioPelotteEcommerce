@@ -1,4 +1,3 @@
-// lib/flags.ts
 import { statsigAdapter, type StatsigUser } from "@flags-sdk/statsig";
 import { flag, dedupe } from "flags/next";
 import type { Identify } from "flags";
@@ -21,20 +20,18 @@ const adapter = statsigAdapter({ serverSecret });
  */
 export const identify = dedupe(async () => ({
   userID: "anon",
-  // Ejemplo de atributos opcionales:
-  // custom: { zona: "Abasto", rol: "guest" }
+  // custom: { zona: "Abasto", rol: "guest" },
 })) satisfies Identify<StatsigUser>;
 
 /** Helper para crear feature flags booleans */
 export const createFeatureFlag = (key: string) =>
   flag<boolean, StatsigUser>({
     key,
-    adapter: adapter.featureGate((gate) => gate.value, {
+    adapter: adapter.featureGate((gate: { value: boolean }) => gate.value, {
       exposureLogging: true,
     }),
     identify,
   });
 
 /** === Tus flags van acá === */
-export const flagNuevoCarrusel = createFeatureFlag("nuevo_carrusel"); // ejemplo
-export const flagSpeedHeader   = createFeatureFlag("speed_header");    // opcional
+export const flagNuevoCarrusel = createFeatureFlag("nuevo_carrusel");

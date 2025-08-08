@@ -1,6 +1,6 @@
 // app/api/flags/route.ts
 import { NextResponse } from "next/server";
-import { flagNuevoCarrusel, flagSpeedHeader } from "@/lib/flags";
+import { flagNuevoCarrusel } from "@/lib/flags";
 
 export const runtime = "edge"; // rápido y barato
 
@@ -11,12 +11,13 @@ export async function POST(req: Request) {
     const entries: [string, boolean][] = [];
 
     for (const k of keys as string[]) {
-      if (k === "nuevo_carrusel") entries.push([k, await flagNuevoCarrusel()]);
-      if (k === "speed_header") entries.push([k, await flagSpeedHeader()]);
+      if (k === "nuevo_carrusel") {
+        entries.push([k, await flagNuevoCarrusel()]);
+      }
     }
 
     return NextResponse.json(Object.fromEntries(entries));
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
 }
