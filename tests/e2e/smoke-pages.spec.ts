@@ -1,9 +1,17 @@
-// tests/e2e/smoke-pages.spec.ts
 import { test, expect } from '@playwright/test';
 
 const routes = [
-  '/', '/productos', '/historia', '/ubicacion',
-  '/recetas', '/carrito', '/checkout', '/consultarPedido'
+  '/',
+  '/productos',
+  '/historia',
+  '/ubicacion',
+  '/recetas',
+  '/cart',
+  '/checkout',
+  '/consultarPedido',
+  '/login',
+  '/register',
+  '/reset-password',
   // agrega otras que tengas (blog, contacto, etc.)
 ];
 

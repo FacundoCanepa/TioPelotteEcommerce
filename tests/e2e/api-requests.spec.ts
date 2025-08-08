@@ -1,10 +1,11 @@
-// tests/e2e/api-requests.spec.ts
 import { test, expect } from '@playwright/test';
 
 const api = [
   '/api/products?limit=12',
   '/api/categories',
   '/api/recetas?limit=8',
+  '/api/zonas',
+  '/api/pedidos',
   // agrega tus endpoints internos (pedidos, zonas, etc.)
 ];
 

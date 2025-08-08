@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Home from "@/components/sections/Home";
+import FeaturedProductsSection from "@/components/sections/home/FeaturedProducts";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -33,6 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Page() {
-  return <Home />;
+export default async function Page() {
+  const featured = <FeaturedProductsSection />;
+  return <Home featuredProducts={featured} />;
 }

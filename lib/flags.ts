@@ -13,6 +13,7 @@ if (!serverSecret) {
     "⚠️ Falta FLAGS_SECRET o STATSIG_SERVER_SECRET en .env.local (Statsig)"
   );
 }
+const adapter = statsigAdapter({ serverSecret });
 
 /**
  * Identidad base para segmentar (podés ampliar con userId real, zona, etc.)
@@ -28,7 +29,7 @@ export const identify = dedupe(async () => ({
 export const createFeatureFlag = (key: string) =>
   flag<boolean, StatsigUser>({
     key,
-    adapter: statsigAdapter.featureGate((gate) => gate.value, {
+    adapter: adapter.featureGate((gate) => gate.value, {
       exposureLogging: true,
     }),
     identify,

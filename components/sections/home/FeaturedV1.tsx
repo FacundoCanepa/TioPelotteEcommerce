@@ -6,7 +6,7 @@ import SkeletonCarousel from "@/components/ui/skeletonSchema";
 import { useGetFeaturedProducts } from "@/components/hooks/useGetFeaturedProducts";
 import { motion } from "framer-motion";
 
-export default function FeaturedProducts() {
+export default function FeaturedV1() {
   const { loading, result, error } = useGetFeaturedProducts();
 
   if (error) {

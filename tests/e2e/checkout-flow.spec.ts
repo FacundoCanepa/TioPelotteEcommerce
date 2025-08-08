@@ -1,4 +1,3 @@
-// tests/e2e/checkout-flow.spec.ts
 import { test, expect } from '@playwright/test';
 
 test('Flow compra: productos → carrito → checkout', async ({ page }) => {
@@ -19,7 +18,7 @@ test('Flow compra: productos → carrito → checkout', async ({ page }) => {
 
   // Ir al carrito
   await page.getByRole('link', { name: /carrito/i }).click();
-  await expect(page).toHaveURL(/\/carrito/);
+  await expect(page).toHaveURL(/\/cart/);
 
   // Ir a checkout
   await page.getByRole('link', { name: /checkout|finalizar compra/i }).click();

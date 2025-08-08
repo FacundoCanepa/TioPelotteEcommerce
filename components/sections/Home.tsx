@@ -4,7 +4,6 @@ import { useGetOfferProducts } from "@/components/hooks/useGetOfertProducts";
 import { useGetDessertProducts } from "@/components/hooks/useGetDessertProducts";
 
 import CaroseText from "@/components/sections/shared/caroseText";
-import FeaturedProducts from "@/components/sections/home/FeaturedProducts";
 import ProductCarouselSection from "@/components/sections/home/product-carousel/ProductCarouselSection";
 import NuestraHistoria from "@/components/sections/home/nuestraHistoria";
 import Ubicacion from "@/components/sections/home/ubicacion";
@@ -12,7 +11,11 @@ import CommentsUser from "@/components/sections/home/commentsUsers";
 import CategoryHome from "@/components/sections/home/categoryHome";
 import RedesSociales from "@/components/sections/home/redesSociales";
 
-export default function Home() {
+export default function Home({
+  featuredProducts,
+}: {
+  featuredProducts: React.ReactNode;
+}) {
   const offerProducts = useGetOfferProducts();
   const dessertProducts = useGetDessertProducts();
 
@@ -20,7 +23,7 @@ export default function Home() {
     <>
       <CaroseText />
 
-      <FeaturedProducts />
+      {featuredProducts}
 
       <NuestraHistoria />
 
