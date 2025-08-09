@@ -1,17 +1,15 @@
-import { defineConfig } from "@checkly/cli";
+import { defineConfig } from '@checkly/cli';
 
 export default defineConfig({
-  projectName: "tiopelotte-e2e",
-  logicalId: "tiopelotte-e2e",
-  repo: ".",
+  projectName: 'tiopelotte-e2e',
+  logicalId: 'tiopelotte-e2e',
+  repoUrl: '.',
   checks: {
-    browserChecks: {
-      testMatch: "tests/e2e/**/*.spec.ts",
+    playwright: {
+      testMatch: ['tests/e2e/**/*.spec.ts'],
       env: {
-        BASE_URL:
-          process.env.BASE_URL ||
-          "https://tio-pelotte-ecommerce02.vercel.app",
-        API_BASE_URL: process.env.API_BASE_URL || "https://<mi-dominio>",
+        BASE_URL: process.env.BASE_URL ?? 'https://tio-pelotte-ecommerce02.vercel.app',
+        API_BASE_URL: process.env.API_BASE_URL ?? 'https://<tu-api>',
       },
     },
   },

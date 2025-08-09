@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Home from "@/components/sections/Home";
-import FeaturedProductsSection from "@/components/sections/home/FeaturedProducts";
+import FeaturedProductsSection from "@/components/sections/home/FeaturedV1";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

@@ -1,37 +1,29 @@
+// lib/flags.ts
 import { statsigAdapter, type StatsigUser } from "@flags-sdk/statsig";
 import { flag, dedupe } from "flags/next";
 import type { Identify } from "flags";
 
-// Usa las ENV que copiaste a .env.local
-const serverSecret =
-  process.env.FLAGS_SECRET || process.env.STATSIG_SERVER_SECRET;
-
-if (!serverSecret) {
-  // No detiene la app, pero te avisa en dev
-  console.warn(
-    "⚠️ Falta FLAGS_SECRET o STATSIG_SERVER_SECRET en .env.local (Statsig)"
-  );
+// Usá FLAGS_SECRET o STATSIG_SERVER_SECRET por env (no hace falta pasarlo al adapter)
+if (!process.env.FLAGS_SECRET && !process.env.STATSIG_SERVER_SECRET) {
+  console.warn("⚠️ Falta FLAGS_SECRET o STATSIG_SERVER_SECRET en .env.local (Statsig)");
 }
-const adapter = statsigAdapter({ serverSecret });
 
-/**
- * Identidad base para segmentar (podés ampliar con userId real, zona, etc.)
- * OJO: corre en el servidor, no poner info sensible del cliente acá.
- */
+// Identidad base (podés ampliarla luego)
 export const identify = dedupe(async () => ({
   userID: "anon",
-  // custom: { zona: "Abasto", rol: "guest" },
 })) satisfies Identify<StatsigUser>;
 
-/** Helper para crear feature flags booleans */
+// Helper para crear flags booleanos
 export const createFeatureFlag = (key: string) =>
   flag<boolean, StatsigUser>({
     key,
-    adapter: adapter.featureGate((gate: { value: boolean }) => gate.value, {
-      exposureLogging: true,
-    }),
+    // 🔑 Usar el método estático directo del adapter
+    adapter: statsigAdapter.featureGate(
+      (gate: { value: boolean }) => gate.value,
+      { exposureLogging: true }
+    ),
     identify,
   });
 
-/** === Tus flags van acá === */
+// === Tus flags
 export const flagNuevoCarrusel = createFeatureFlag("nuevo_carrusel");
